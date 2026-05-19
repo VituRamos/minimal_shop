@@ -4,7 +4,6 @@ import 'package:minimal_shop/pages/cart_page.dart';
 import 'package:minimal_shop/pages/favorite_page.dart';
 import 'package:minimal_shop/pages/intro_page.dart';
 import 'package:minimal_shop/pages/shop_page.dart';
-import 'package:minimal_shop/theme/theme.dart';
 import 'package:minimal_shop/providers/theme_provider.dart';
 import 'package:minimal_shop/utils/app_routes.dart';
 import 'package:provider/provider.dart';

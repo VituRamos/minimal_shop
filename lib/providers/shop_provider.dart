@@ -38,8 +38,8 @@ class ShopProvider extends ChangeNotifier {
   ];
 
   //Cart
-  List<Product> _cart = [];
-  List<Product> _favorite = [];
+  final List<Product> _cart = [];
+  final List<Product> _favorite = [];
 
   //Get Product
   List<Product> get shop => _shop;

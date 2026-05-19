@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:minimal_shop/components/my_badge.dart';
 import 'package:minimal_shop/components/my_drawer.dart';
 import 'package:minimal_shop/components/my_product_tile.dart';
 import 'package:minimal_shop/providers/shop_provider.dart';
@@ -33,9 +34,12 @@ class ShopPage extends StatelessWidget {
           ),
 
           //Go to cart button
-          IconButton(
-            onPressed: () => Navigator.pushNamed(context, '/cart_page'),
-            icon: Icon(Icons.shopping_cart),
+          MyBadge(
+            value: context.watch<ShopProvider>().cart.length.toString(),
+            child: IconButton(
+              onPressed: () => Navigator.pushNamed(context, '/cart_page'),
+              icon: Icon(Icons.shopping_cart),
+            ),
           ),
           //Toggle theme button
         ],
