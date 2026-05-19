@@ -1,4 +1,4 @@
-# portfolio_2
+# Minimal Shop
 
 A new Flutter project.
 
