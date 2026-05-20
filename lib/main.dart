@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:minimal_shop/pages/details_page.dart';
 import 'package:minimal_shop/providers/shop_provider.dart';
 import 'package:minimal_shop/pages/cart_page.dart';
 import 'package:minimal_shop/pages/favorite_page.dart';
@@ -35,6 +36,7 @@ class MyApp extends StatelessWidget {
         AppRoutes.ShopPage: (context) => const ShopPage(),
         AppRoutes.CartPage: (context) => const CartPage(),
         AppRoutes.FavoritePage: (context) => const FavoritePage(),
+        AppRoutes.DetailsPage: (context) => const DetailsPage(),
       },
     );
   }

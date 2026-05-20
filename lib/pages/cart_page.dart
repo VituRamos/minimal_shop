@@ -89,7 +89,7 @@ class CartPage extends StatelessWidget {
             padding: const EdgeInsets.all(50),
             child: MyButton(
               onTap: () => payButtonPressed(context),
-              child: Text("PAY NOW"),
+              child: Text("Checkout"),
             ),
           ),
         ],

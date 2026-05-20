@@ -23,9 +23,7 @@ class ShopPage extends StatelessWidget {
         actions: [
           //Toggle theme
           IconButton(
-            onPressed: () {
-              context.read<ThemeProvider>().toggleTheme();
-            },
+            onPressed: () => context.read<ThemeProvider>().toggleTheme(),
             icon: Icon(
               context.watch<ThemeProvider>().isDarkMode
                   ? Icons.light_mode

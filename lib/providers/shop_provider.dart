@@ -7,7 +7,8 @@ class ShopProvider extends ChangeNotifier {
     Product(
       name: "Product 1",
       price: 99.99,
-      description: "Description",
+      description:
+          "Detailed description of this premium item goes here. Perfect fit and premium quality material.",
       isFavorite: false,
       imagePath: 'lib/images/SNKRS1.png',
     ),
@@ -15,7 +16,8 @@ class ShopProvider extends ChangeNotifier {
     Product(
       name: "Product 2",
       price: 99.99,
-      description: "Description",
+      description:
+          "Detailed description of this premium item goes here. Perfect fit and premium quality material.",
       isFavorite: false,
       imagePath: 'lib/images/SNKRS2.png',
     ),
@@ -23,7 +25,8 @@ class ShopProvider extends ChangeNotifier {
     Product(
       name: "Product 3",
       price: 99.99,
-      description: "Description",
+      description:
+          "Detailed description of this premium item goes here. Perfect fit and premium quality material.",
       isFavorite: false,
       imagePath: 'lib/images/SNKRS3.png',
     ),
@@ -31,7 +34,8 @@ class ShopProvider extends ChangeNotifier {
     Product(
       name: "Product 4",
       price: 99.99,
-      description: "Description",
+      description:
+          "Detailed description of this premium item goes here. Perfect fit and premium quality material.",
       isFavorite: false,
       imagePath: 'lib/images/SNKRS4.png',
     ),
@@ -65,12 +69,7 @@ class ShopProvider extends ChangeNotifier {
   // Toggle Item Favorite
   void toggleFavorite(Product item) {
     item.isFavorite = !item.isFavorite;
-
-    if (item.isFavorite) {
-      _favorite.add(item);
-    } else {
-      _favorite.remove(item);
-    }
+    item.isFavorite ? _favorite.add(item) : _favorite.remove(item);
 
     notifyListeners();
   }
