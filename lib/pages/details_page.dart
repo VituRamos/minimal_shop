@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:minimal_shop/components/my_button.dart';
+import 'package:minimal_shop/components/my_favorite_button.dart';
 import 'package:minimal_shop/models/product.dart';
 import 'package:minimal_shop/providers/shop_provider.dart';
 import 'package:provider/provider.dart';
@@ -9,8 +10,8 @@ class DetailsPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
     final product = ModalRoute.of(context)!.settings.arguments as Product;
-
     final isFavorite = context.select<ShopProvider, bool>(
       (shop) => shop.shop
           .firstWhere((element) => element.name == product.name)
@@ -21,21 +22,14 @@ class DetailsPage extends StatelessWidget {
       //App Bar
       appBar: AppBar(
         backgroundColor: Color(0xFFF8FAFC),
-        foregroundColor: Theme.of(context).colorScheme.primary,
+        foregroundColor: Theme.of(context).brightness == Brightness.dark
+            ? colorScheme.primary
+            : colorScheme.inversePrimary,
         elevation: 0,
         centerTitle: true,
         actions: [
-          //Toggle theme
-          IconButton(
-            onPressed: () =>
-                context.read<ShopProvider>().toggleFavorite(product),
-            icon: Icon(
-              isFavorite ? Icons.favorite : Icons.favorite_border,
-              color: isFavorite
-                  ? Colors.red.shade400
-                  : Theme.of(context).colorScheme.inversePrimary,
-            ),
-          ),
+          //Toggle favorite
+          MyFavoriteButton(isFavorite: isFavorite, product: product, size: 24),
         ],
       ),
 
@@ -82,9 +76,7 @@ class DetailsPage extends StatelessWidget {
                             Text(
                               "\$${product.price.toStringAsFixed(2)}",
                               style: TextStyle(
-                                color: Theme.of(
-                                  context,
-                                ).colorScheme.inversePrimary,
+                                color: colorScheme.tertiary,
                                 fontWeight: FontWeight.bold,
                                 fontSize: 22,
                               ),
@@ -134,7 +126,7 @@ class DetailsPage extends StatelessWidget {
                       style: TextStyle(
                         fontWeight: FontWeight.bold,
                         fontSize: 16,
-                        color: Color(0xFFF8FAFC),
+                        color: Colors.white,
                       ),
                     ),
                   ),

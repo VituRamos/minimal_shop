@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:minimal_shop/components/my_favorite_button.dart';
 import 'package:minimal_shop/models/product.dart';
 import 'package:minimal_shop/providers/shop_provider.dart';
 import 'package:minimal_shop/utils/app_routes.dart';
@@ -106,7 +107,13 @@ class MyProductTile extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   //Price
-                  Text('\$${product.price.toStringAsFixed(2)}'),
+                  Text(
+                    '\$${product.price.toStringAsFixed(2)}',
+                    style: TextStyle(
+                      color: Theme.of(context).colorScheme.tertiary,
+                      fontWeight: FontWeight.w700,
+                    ),
+                  ),
 
                   //Add to cart button
                   Row(
@@ -132,18 +139,10 @@ class MyProductTile extends StatelessWidget {
                           color: Theme.of(context).colorScheme.secondary,
                           borderRadius: BorderRadius.circular(12),
                         ),
-                        child: IconButton(
-                          onPressed: () => context
-                              .read<ShopProvider>()
-                              .toggleFavorite(product),
-                          icon: Icon(
-                            isFavorite
-                                ? Icons.favorite
-                                : Icons.favorite_border,
-                            color: isFavorite
-                                ? Colors.red.shade400
-                                : Theme.of(context).colorScheme.inversePrimary,
-                          ),
+                        child: MyFavoriteButton(
+                          isFavorite: isFavorite,
+                          product: product,
+                          size: 24,
                         ),
                       ),
                     ],

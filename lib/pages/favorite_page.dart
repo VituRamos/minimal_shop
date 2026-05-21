@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:minimal_shop/components/my_favorite_tile.dart';
 import 'package:minimal_shop/models/product.dart';
 import 'package:minimal_shop/providers/shop_provider.dart';
 import 'package:provider/provider.dart';
@@ -35,64 +36,41 @@ class FavoritePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+
     //Acess to favorites
     final favorites = context.watch<ShopProvider>().favorite;
 
     return Scaffold(
+      backgroundColor: colorScheme.surface,
+
+      //AppBar
       appBar: AppBar(
         backgroundColor: Colors.transparent,
-        foregroundColor: Theme.of(context).colorScheme.inversePrimary,
+        foregroundColor: colorScheme.inversePrimary,
         elevation: 0,
         centerTitle: true,
-        title: const Text("Favorites Page"),
+        title: const Text("Favorites"),
       ),
-      backgroundColor: Theme.of(context).colorScheme.surface,
-      body: Column(
-        children: [
-          //Favorite List
-          Expanded(
-            child: favorites.isEmpty
-                ? Center(child: const Text("Your favorites is empty..."))
-                : ListView.builder(
-                    itemCount: favorites.length,
-                    itemBuilder: (context, index) {
-                      //Get individual item in Favorite
-                      final item = favorites[index];
 
-                      //Return as a Favorite tile
-                      return ListTile(
-                        title: Text(item.name),
-                        subtitle: Text(item.price.toStringAsFixed(2)),
-                        trailing: Row(
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            IconButton(
-                              icon: Icon(Icons.shopping_cart),
-                              onPressed: () {
-                                context.read<ShopProvider>().addToCart(item);
-                                ScaffoldMessenger.of(context).showSnackBar(
-                                  SnackBar(
-                                    content: Text(
-                                      "${item.name} added to cart!",
-                                    ),
-                                  ),
-                                );
-                              },
-                            ),
-
-                            IconButton(
-                              icon: Icon(Icons.remove),
-                              onPressed: () =>
-                                  removeItemFromFavorite(context, item),
-                            ),
-                          ],
-                        ),
-                      );
-                    },
-                  ),
-          ),
-        ],
-      ),
+      body: favorites.isEmpty
+          ? const Center(child: Text("No favorites added yet..."))
+          : Padding(
+              padding: const EdgeInsetsGeometry.symmetric(horizontal: 25),
+              child: GridView.builder(
+                itemCount: favorites.length,
+                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 2,
+                  mainAxisSpacing: 15,
+                  crossAxisSpacing: 15,
+                  childAspectRatio: 1 / 1.3,
+                ),
+                itemBuilder: (context, index) {
+                  final product = favorites[index];
+                  return MyFavoriteTile(product: product);
+                },
+              ),
+            ),
     );
   }
 }

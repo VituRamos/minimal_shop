@@ -6,6 +6,7 @@ import 'package:minimal_shop/pages/favorite_page.dart';
 import 'package:minimal_shop/pages/intro_page.dart';
 import 'package:minimal_shop/pages/shop_page.dart';
 import 'package:minimal_shop/providers/theme_provider.dart';
+import 'package:minimal_shop/theme/theme.dart';
 import 'package:minimal_shop/utils/app_routes.dart';
 import 'package:provider/provider.dart';
 
@@ -29,7 +30,9 @@ class AppRoot extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       home: const IntroPage(),
-      theme: context.watch<ThemeProvider>().themeData,
+      theme: lightMode,
+      darkTheme: darkMode,
+      themeMode: context.watch<ThemeProvider>().themeMode,
       routes: {
         AppRoutes.IntroPage: (context) => const IntroPage(),
         AppRoutes.ShopPage: (context) => const ShopPage(),

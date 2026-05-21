@@ -64,8 +64,9 @@ class MyCartTile extends StatelessWidget {
 
                 Text(
                   "\$${(product.price * quantity).toStringAsFixed(2)}",
-                  style: const TextStyle(
-                    fontWeight: FontWeight.bold,
+                  style: TextStyle(
+                    fontWeight: FontWeight.w700,
+                    color: colorScheme.tertiary,
                     fontSize: 16,
                   ),
                 ),

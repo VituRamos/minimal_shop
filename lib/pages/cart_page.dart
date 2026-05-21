@@ -32,13 +32,38 @@ class CartPage extends StatelessWidget {
     );
   }
 
-  void payButtonPressed(BuildContext context) {
+  void payButtonPressed(BuildContext context, double totalAmount) {
     showDialog(
       context: context,
-      builder: (context) => const AlertDialog(
-        content: Text(
-          "User wants to pay! Connect this app to your payment backend",
-        ),
+      barrierDismissible: false,
+      builder: (dialogContext) => AlertDialog(
+        title: const Text('Confirm checkout'),
+        content: Text('Total: \$${totalAmount.toStringAsFixed(2)}. Proceed?'),
+        actions: [
+          // Botão Cancelar
+          TextButton(
+            onPressed: () => Navigator.pop(dialogContext),
+            child: const Text('Cancel'),
+          ),
+
+          FilledButton(
+            style: FilledButton.styleFrom(
+              backgroundColor: Theme.of(context).colorScheme.tertiary,
+            ),
+            onPressed: () {
+              final messenger = ScaffoldMessenger.of(context);
+              context.read<ShopProvider>().clearCart();
+              Navigator.pop(dialogContext);
+              messenger.showSnackBar(
+                const SnackBar(
+                  content: Text("Purchase completed successfully!"),
+                  behavior: SnackBarBehavior.floating,
+                ),
+              );
+            },
+            child: const Text('Pay'),
+          ),
+        ],
       ),
     );
   }
@@ -46,9 +71,7 @@ class CartPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;
-
     final cartEntries = context.watch<ShopProvider>().cart.entries.toList();
-
     final totalAmount = context.select<ShopProvider, double>(
       (shop) => shop.cartTotalAmount,
     );
@@ -138,7 +161,7 @@ class CartPage extends StatelessWidget {
                       const SizedBox(height: 20),
 
                       MyButton(
-                        onTap: () => payButtonPressed(context),
+                        onTap: () => payButtonPressed(context, totalAmount),
                         child: Center(
                           child: Text(
                             "Checkout",
