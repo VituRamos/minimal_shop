@@ -4,10 +4,30 @@ import 'package:minimal_shop/components/my_drawer.dart';
 import 'package:minimal_shop/components/my_product_tile.dart';
 import 'package:minimal_shop/providers/shop_provider.dart';
 import 'package:minimal_shop/providers/theme_provider.dart';
+import 'package:minimal_shop/utils/app_routes.dart';
 import 'package:provider/provider.dart';
 
-class ShopPage extends StatelessWidget {
+class ShopPage extends StatefulWidget {
   const ShopPage({super.key});
+
+  @override
+  State<ShopPage> createState() => _ShopPageState();
+}
+
+class _ShopPageState extends State<ShopPage> {
+  late final PageController _pageController;
+
+  @override
+  void initState() {
+    super.initState();
+    _pageController = PageController(viewportFraction: 0.85);
+  }
+
+  @override
+  void dispose() {
+    _pageController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -33,9 +53,10 @@ class ShopPage extends StatelessWidget {
 
           //Go to cart button
           MyBadge(
-            value: context.watch<ShopProvider>().cart.length.toString(),
+            value: context.watch<ShopProvider>().cartItemCount.toString(),
             child: IconButton(
-              onPressed: () => Navigator.pushNamed(context, '/cart_page'),
+              onPressed: () =>
+                  Navigator.pushNamed(context, AppRoutes.CartPage),
               icon: Icon(Icons.shopping_cart),
             ),
           ),
@@ -63,7 +84,7 @@ class ShopPage extends StatelessWidget {
           SizedBox(
             height: 550,
             child: PageView.builder(
-              controller: PageController(viewportFraction: 0.85),
+              controller: _pageController,
               itemCount: products.length,
               itemBuilder: (context, index) {
                 final product = products[index];

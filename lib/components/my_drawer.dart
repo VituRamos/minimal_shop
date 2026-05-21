@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:minimal_shop/components/my_list_tile.dart';
+import 'package:minimal_shop/utils/app_routes.dart';
 
 class MyDrawer extends StatelessWidget {
   const MyDrawer({super.key});
@@ -30,9 +31,9 @@ class MyDrawer extends StatelessWidget {
               MyListTile(
                 icon: Icons.home,
                 text: "Shop",
-                onTap: () => {
-                  Navigator.pop(context),
-                  Navigator.pushNamed(context, '/shop_page'),
+                onTap: () {
+                  Navigator.pop(context);
+                  Navigator.pushNamed(context, AppRoutes.ShopPage);
                 },
               ),
 
@@ -40,9 +41,9 @@ class MyDrawer extends StatelessWidget {
               MyListTile(
                 icon: Icons.shopping_cart,
                 text: "Cart",
-                onTap: () => {
-                  Navigator.pop(context),
-                  Navigator.pushNamed(context, '/cart_page'),
+                onTap: () {
+                  Navigator.pop(context);
+                  Navigator.pushNamed(context, AppRoutes.CartPage);
                 },
               ),
 
@@ -50,9 +51,9 @@ class MyDrawer extends StatelessWidget {
               MyListTile(
                 icon: Icons.favorite,
                 text: "Favorites",
-                onTap: () => {
-                  Navigator.pop(context),
-                  Navigator.pushNamed(context, '/favorite_page'),
+                onTap: () {
+                  Navigator.pop(context);
+                  Navigator.pushNamed(context, AppRoutes.FavoritePage);
                 },
               ),
             ],
@@ -65,13 +66,13 @@ class MyDrawer extends StatelessWidget {
             child: MyListTile(
               icon: Icons.logout,
               text: "Exit",
-              onTap: () => {
-                Navigator.pop(context),
+              onTap: () {
+                Navigator.pop(context);
                 Navigator.pushNamedAndRemoveUntil(
                   context,
-                  '/intro_page',
+                  AppRoutes.IntroPage,
                   (route) => false,
-                ),
+                );
               },
             ),
           ),

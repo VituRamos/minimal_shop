@@ -40,102 +40,112 @@ class DetailsPage extends StatelessWidget {
       ),
 
       //Body
-      body: SingleChildScrollView(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            //Image
-            AspectRatio(
-              aspectRatio: 1,
-              child: Container(
-                decoration: BoxDecoration(
-                  color: Theme.of(context).colorScheme.primary,
-                  borderRadius: BorderRadius.circular(12),
-                ),
-                padding: EdgeInsets.all(25),
-                width: double.infinity,
-                child: Image.asset(product.imagePath),
-              ),
-            ),
-
-            //Infos
-            Padding(
-              padding: const EdgeInsets.all(25),
+      body: Column(
+        children: [
+          Expanded(
+            child: SingleChildScrollView(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  //Product Name
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        product.name,
-                        style: const TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 22,
-                        ),
+                  //Image
+                  AspectRatio(
+                    aspectRatio: 1,
+                    child: Container(
+                      decoration: BoxDecoration(
+                        color: Theme.of(context).colorScheme.primary,
+                        borderRadius: BorderRadius.circular(12),
                       ),
-
-                      const SizedBox(height: 10),
-
-                      //Product Price
-                      Text(
-                        "\$${product.price.toStringAsFixed(2)}",
-                        style: TextStyle(
-                          color: Theme.of(context).colorScheme.inversePrimary,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 22,
-                        ),
-                      ),
-                    ],
+                      padding: EdgeInsets.all(25),
+                      width: double.infinity,
+                      child: Image.asset(product.imagePath),
+                    ),
                   ),
 
-                  const SizedBox(height: 20),
+                  //Infos
+                  Padding(
+                    padding: const EdgeInsets.all(25),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        //Product Name
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                              product.name,
+                              style: const TextStyle(
+                                fontWeight: FontWeight.bold,
+                                fontSize: 22,
+                              ),
+                            ),
 
-                  //Details
-                  const Text(
-                    "Detailed description of this premium item goes here. Perfect fit and premium quality material.",
-                    style: TextStyle(color: Colors.grey),
+                            const SizedBox(width: 10),
+
+                            //Product Price
+                            Text(
+                              "\$${product.price.toStringAsFixed(2)}",
+                              style: TextStyle(
+                                color: Theme.of(
+                                  context,
+                                ).colorScheme.inversePrimary,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 22,
+                              ),
+                            ),
+                          ],
+                        ),
+
+                        const SizedBox(height: 20),
+
+                        //Description
+                        Text(
+                          product.description,
+                          style: const TextStyle(color: Colors.grey),
+                        ),
+                      ],
+                    ),
                   ),
                 ],
               ),
             ),
+          ),
 
-            //Button add to cart
-            Padding(
-              // Aplica o mesmo espaçamento lateral (25) das informações acima,
-              // mantendo o botão perfeitamente alinhado com as bordas do texto.
-              padding: const EdgeInsets.symmetric(
-                horizontal: 25.0,
-                vertical: 20.0,
-              ),
-              child: MyButton(
-                onTap: () {
-                  context.read<ShopProvider>().addToCart(product);
+          //Button add to cart
+          Container(
+            width: double.infinity,
+            decoration: BoxDecoration(
+              color: Theme.of(context).colorScheme.surface,
+            ),
+            child: SafeArea(
+              top: false,
+              child: Padding(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 25.0,
+                  vertical: 20.0,
+                ),
+                child: MyButton(
+                  onTap: () {
+                    context.read<ShopProvider>().addToCart(product);
 
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(
-                      content: Text("${product.name} added to cart!"),
-                      duration: const Duration(seconds: 2),
-                    ),
-                  );
-                },
-                // O Center aqui garante que o texto fique rigorosamente no meio do botão
-                child: const Center(
-                  child: Text(
-                    "Add to cart",
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 16,
-                      color: Colors
-                          .white, // Se o fundo do seu botão for escuro/verde
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(content: Text("${product.name} added to cart!")),
+                    );
+                  },
+                  child: Center(
+                    child: Text(
+                      "Add to cart",
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 16,
+                        color: Theme.of(context).colorScheme.inversePrimary,
+                      ),
                     ),
                   ),
                 ),
               ),
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:minimal_shop/components/my_button.dart';
+import 'package:minimal_shop/utils/app_routes.dart';
 
 class IntroPage extends StatelessWidget {
   const IntroPage({super.key});
@@ -48,7 +49,7 @@ class IntroPage extends StatelessWidget {
 
             //Button
             MyButton(
-              onTap: () => Navigator.pushNamed(context, '/shop_page'),
+              onTap: () => Navigator.pushNamed(context, AppRoutes.ShopPage),
               child: const Icon(Icons.arrow_forward),
             ),
           ],

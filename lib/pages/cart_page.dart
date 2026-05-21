@@ -39,8 +39,8 @@ class CartPage extends StatelessWidget {
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
-        content: Text(
-          "User wants to play! Connect this app to your payment backend",
+        content: const Text(
+          "User wants to pay! Connect this app to your payment backend",
         ),
       ),
     );
@@ -49,7 +49,7 @@ class CartPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     //Acess to cart
-    final cart = context.watch<ShopProvider>().cart;
+    final cartEntries = context.watch<ShopProvider>().cart.entries.toList();
 
     return Scaffold(
       appBar: AppBar(
@@ -64,21 +64,26 @@ class CartPage extends StatelessWidget {
         children: [
           //Cart List
           Expanded(
-            child: cart.isEmpty
+            child: cartEntries.isEmpty
                 ? Center(child: const Text("Your cart is empty..."))
                 : ListView.builder(
-                    itemCount: cart.length,
+                    itemCount: cartEntries.length,
                     itemBuilder: (context, index) {
                       //Get individual item in cart
-                      final item = cart[index];
+                      final entry = cartEntries[index];
+                      final item = entry.key;
+                      final quantity = entry.value;
 
                       //Return as a cart tile
                       return ListTile(
                         title: Text(item.name),
-                        subtitle: Text(item.price.toStringAsFixed(2)),
+                        subtitle: Text(
+                          '\$${item.price.toStringAsFixed(2)} x $quantity',
+                        ),
                         trailing: IconButton(
                           icon: Icon(Icons.remove),
-                          onPressed: () => removeItemFromCart(context, item),
+                          onPressed: () =>
+                              removeItemFromCart(context, item),
                         ),
                       );
                     },

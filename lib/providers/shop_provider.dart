@@ -42,35 +42,48 @@ class ShopProvider extends ChangeNotifier {
   ];
 
   //Cart
-  final List<Product> _cart = [];
-  final List<Product> _favorite = [];
+  final Map<Product, int> _cart = {};
 
   //Get Product
   List<Product> get shop => _shop;
 
   //Get Cart
-  List<Product> get cart => _cart;
+  Map<Product, int> get cart => Map.unmodifiable(_cart);
 
-  //Get Cart
-  List<Product> get favorite => _favorite;
+  //Get Favorite
+  List<Product> get favorite => _shop.where((p) => p.isFavorite).toList();
+
+  int get cartItemCount =>
+      _cart.values.fold<int>(0, (total, quantity) => total + quantity);
+
+  Product _productFrom(Product item) =>
+      _shop.firstWhere((p) => p.name == item.name);
 
   //Add Item To Cart
   void addToCart(Product item) {
-    _cart.add(item);
+    final product = _productFrom(item);
+    _cart[product] = (_cart[product] ?? 0) + 1;
     notifyListeners();
   }
 
   //Remove Item To Cart
   void removeFromCart(Product item) {
-    _cart.remove(item);
+    final product = _productFrom(item);
+    if (!_cart.containsKey(product)) return;
+
+    final quantity = (_cart[product] ?? 0) - 1;
+    if (quantity <= 0) {
+      _cart.remove(product);
+    } else {
+      _cart[product] = quantity;
+    }
     notifyListeners();
   }
 
   // Toggle Item Favorite
   void toggleFavorite(Product item) {
-    item.isFavorite = !item.isFavorite;
-    item.isFavorite ? _favorite.add(item) : _favorite.remove(item);
-
+    final product = _productFrom(item);
+    product.isFavorite = !product.isFavorite;
     notifyListeners();
   }
 }
