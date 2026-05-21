@@ -80,6 +80,21 @@ class ShopProvider extends ChangeNotifier {
     notifyListeners();
   }
 
+  //Cart Amount
+  double get cartTotalAmount {
+    double total = 0.0;
+    _cart.forEach((product, quantity) {
+      total += product.price * quantity;
+    });
+    return total;
+  }
+
+  //Clear Cart
+  void clearCart() {
+    _cart.clear();
+    notifyListeners();
+  }
+
   // Toggle Item Favorite
   void toggleFavorite(Product item) {
     final product = _productFrom(item);

@@ -20,8 +20,8 @@ class DetailsPage extends StatelessWidget {
     return Scaffold(
       //App Bar
       appBar: AppBar(
-        backgroundColor: Theme.of(context).colorScheme.primary,
-        foregroundColor: Theme.of(context).colorScheme.inversePrimary,
+        backgroundColor: Color(0xFFF8FAFC),
+        foregroundColor: Theme.of(context).colorScheme.primary,
         elevation: 0,
         centerTitle: true,
         actions: [
@@ -51,10 +51,7 @@ class DetailsPage extends StatelessWidget {
                   AspectRatio(
                     aspectRatio: 1,
                     child: Container(
-                      decoration: BoxDecoration(
-                        color: Theme.of(context).colorScheme.primary,
-                        borderRadius: BorderRadius.circular(12),
-                      ),
+                      decoration: BoxDecoration(color: Color(0xFFF8FAFC)),
                       padding: EdgeInsets.all(25),
                       width: double.infinity,
                       child: Image.asset(product.imagePath),
@@ -137,7 +134,7 @@ class DetailsPage extends StatelessWidget {
                       style: TextStyle(
                         fontWeight: FontWeight.bold,
                         fontSize: 16,
-                        color: Theme.of(context).colorScheme.inversePrimary,
+                        color: Color(0xFFF8FAFC),
                       ),
                     ),
                   ),

@@ -55,8 +55,7 @@ class _ShopPageState extends State<ShopPage> {
           MyBadge(
             value: context.watch<ShopProvider>().cartItemCount.toString(),
             child: IconButton(
-              onPressed: () =>
-                  Navigator.pushNamed(context, AppRoutes.CartPage),
+              onPressed: () => Navigator.pushNamed(context, AppRoutes.CartPage),
               icon: Icon(Icons.shopping_cart),
             ),
           ),

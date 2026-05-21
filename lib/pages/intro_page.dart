@@ -16,31 +16,16 @@ class IntroPage extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            //Logo
-            Icon(
-              Icons.shopping_bag,
-              size: 72,
-              color: Theme.of(context).colorScheme.inversePrimary,
-            ),
-
             //Space Between Elements
             const SizedBox(height: 25),
 
             //Title
             Text(
-              "Minimal Shop",
+              "Just a Shop.",
               style: TextStyle(
                 color: Theme.of(context).colorScheme.inversePrimary,
                 fontWeight: FontWeight.bold,
                 fontSize: 20,
-              ),
-            ),
-
-            //Subtitle
-            Text(
-              "Premium Quality Products",
-              style: TextStyle(
-                color: Theme.of(context).colorScheme.inversePrimary,
               ),
             ),
 
@@ -50,7 +35,10 @@ class IntroPage extends StatelessWidget {
             //Button
             MyButton(
               onTap: () => Navigator.pushNamed(context, AppRoutes.ShopPage),
-              child: const Icon(Icons.arrow_forward),
+              child: Icon(
+                Icons.arrow_forward,
+                color: Theme.of(context).colorScheme.primary,
+              ),
             ),
           ],
         ),

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:minimal_shop/components/my_button.dart';
+import 'package:minimal_shop/components/my_cart_tile.dart';
 import 'package:minimal_shop/models/product.dart';
 import 'package:minimal_shop/providers/shop_provider.dart';
 import 'package:provider/provider.dart';
@@ -7,21 +8,18 @@ import 'package:provider/provider.dart';
 class CartPage extends StatelessWidget {
   const CartPage({super.key});
 
-  //Remove Item From Cart
   void removeItemFromCart(BuildContext context, Product product) {
-    //Ask to user to remove
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
         content: const Text("Remove this item from your cart?"),
         actions: [
-          //Cancel
+          // Cancel
           MaterialButton(
             onPressed: () => Navigator.pop(context),
             child: const Text("Cancel"),
           ),
-
-          //Confirm
+          // Confirm
           MaterialButton(
             onPressed: () {
               Navigator.pop(context);
@@ -34,12 +32,11 @@ class CartPage extends StatelessWidget {
     );
   }
 
-  //User Pressed Pay
   void payButtonPressed(BuildContext context) {
     showDialog(
       context: context,
-      builder: (context) => AlertDialog(
-        content: const Text(
+      builder: (context) => const AlertDialog(
+        content: Text(
           "User wants to pay! Connect this app to your payment backend",
         ),
       ),
@@ -48,55 +45,116 @@ class CartPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    //Acess to cart
+    final colorScheme = Theme.of(context).colorScheme;
+
     final cartEntries = context.watch<ShopProvider>().cart.entries.toList();
 
+    final totalAmount = context.select<ShopProvider, double>(
+      (shop) => shop.cartTotalAmount,
+    );
+
     return Scaffold(
+      backgroundColor: colorScheme.surface,
+
+      //AppBar
       appBar: AppBar(
         backgroundColor: Colors.transparent,
-        foregroundColor: Theme.of(context).colorScheme.inversePrimary,
+        foregroundColor: colorScheme.inversePrimary,
         elevation: 0,
         centerTitle: true,
-        title: const Text("Cart Page"),
+        title: const Text("Cart"),
       ),
-      backgroundColor: Theme.of(context).colorScheme.surface,
+
+      //Body
       body: Column(
         children: [
-          //Cart List
+          //Expanded
           Expanded(
             child: cartEntries.isEmpty
-                ? Center(child: const Text("Your cart is empty..."))
+                ? const Center(child: Text("Your cart is empty..."))
                 : ListView.builder(
                     itemCount: cartEntries.length,
                     itemBuilder: (context, index) {
-                      //Get individual item in cart
                       final entry = cartEntries[index];
-                      final item = entry.key;
+                      final product = entry.key;
                       final quantity = entry.value;
 
-                      //Return as a cart tile
-                      return ListTile(
-                        title: Text(item.name),
-                        subtitle: Text(
-                          '\$${item.price.toStringAsFixed(2)} x $quantity',
-                        ),
-                        trailing: IconButton(
-                          icon: Icon(Icons.remove),
-                          onPressed: () =>
-                              removeItemFromCart(context, item),
-                        ),
+                      return MyCartTile(
+                        product: product,
+                        quantity: quantity,
+                        onDecrement: () {
+                          if (quantity == 1) {
+                            removeItemFromCart(context, product);
+                          } else {
+                            context.read<ShopProvider>().removeFromCart(
+                              product,
+                            );
+                          }
+                        },
+                        onIncrement: () =>
+                            context.read<ShopProvider>().addToCart(product),
                       );
                     },
                   ),
           ),
-          //Pay button
-          Padding(
-            padding: const EdgeInsets.all(50),
-            child: MyButton(
-              onTap: () => payButtonPressed(context),
-              child: Text("Checkout"),
+
+          if (cartEntries.isNotEmpty)
+            Container(
+              width: double.infinity,
+              color: colorScheme.surface,
+              child: SafeArea(
+                top: false,
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 25.0,
+                    vertical: 10.0,
+                  ),
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            "Total amount:",
+                            style: TextStyle(
+                              color: Theme.of(
+                                context,
+                              ).colorScheme.inversePrimary,
+                              fontSize: 16,
+                            ),
+                          ),
+                          Text(
+                            "\$${totalAmount.toStringAsFixed(2)}",
+                            style: TextStyle(
+                              color: colorScheme.inversePrimary,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 20,
+                            ),
+                          ),
+                        ],
+                      ),
+
+                      const SizedBox(height: 20),
+
+                      MyButton(
+                        onTap: () => payButtonPressed(context),
+                        child: Center(
+                          child: Text(
+                            "Checkout",
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 16,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
             ),
-          ),
         ],
       ),
     );
