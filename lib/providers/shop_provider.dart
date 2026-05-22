@@ -2,48 +2,7 @@ import 'package:flutter/widgets.dart';
 import 'package:minimal_shop/models/product.dart';
 
 class ShopProvider extends ChangeNotifier {
-  //Products
-  final List<Product> _shop = [
-    Product(
-      id: "1",
-      name: "Product 1",
-      price: 99.99,
-      description:
-          "Detailed description of this premium item goes here. Perfect fit and premium quality material.",
-      isFavorite: false,
-      imagePath: 'lib/images/SNKRS1.png',
-    ),
-
-    Product(
-      id: "2",
-      name: "Product 2",
-      price: 99.99,
-      description:
-          "Detailed description of this premium item goes here. Perfect fit and premium quality material.",
-      isFavorite: false,
-      imagePath: 'lib/images/SNKRS2.png',
-    ),
-
-    Product(
-      id: "2",
-      name: "Product 3",
-      price: 99.99,
-      description:
-          "Detailed description of this premium item goes here. Perfect fit and premium quality material.",
-      isFavorite: false,
-      imagePath: 'lib/images/SNKRS3.png',
-    ),
-
-    Product(
-      id: "2",
-      name: "Product 4",
-      price: 99.99,
-      description:
-          "Detailed description of this premium item goes here. Perfect fit and premium quality material.",
-      isFavorite: false,
-      imagePath: 'lib/images/SNKRS4.png',
-    ),
-  ];
+  final List<Product> _shop = [];
 
   //Cart
   final Map<Product, int> _cart = {};

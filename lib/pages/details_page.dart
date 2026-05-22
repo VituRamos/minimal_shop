@@ -30,6 +30,7 @@ class DetailsPage extends StatelessWidget {
         actions: [
           //Toggle favorite
           MyFavoriteButton(isFavorite: isFavorite, product: product, size: 24),
+          const SizedBox(width: 10),
         ],
       ),
 

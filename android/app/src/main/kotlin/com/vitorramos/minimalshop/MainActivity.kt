@@ -1,4 +1,4 @@
-package com.example.minimal_shop
+package com.vitorramos.minimalshop
 
 import io.flutter.embedding.android.FlutterActivity
 
